@@ -1,5 +1,3 @@
-'use client';
-
 import { useExample } from "~/hooks/useExample";
 
 export function ClientComponent() {
