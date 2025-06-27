@@ -12,7 +12,6 @@
     "@repo/database": "*"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "typescript": "^5.3.3"
   }
