@@ -1,6 +1,6 @@
 import { useExample } from "~/hooks/useExample";
 
-export function ClientComponent() {
+export default function ClientComponent() {
 	const { data, createMutation, deleteMutation, isLoading } = useExample();
 
 	const deleteUser = async (id: string) => {
