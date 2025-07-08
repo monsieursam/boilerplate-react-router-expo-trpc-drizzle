@@ -1,14 +1,6 @@
-# Turborepo starter
+# React Router + tRPC + Drizzle Boilerplate
 
-This Turborepo starter is maintained by the Turborepo core team.
-
-## Using this example
-
-Run the following command:
-
-```sh
-npx create-turbo@latest
-```
+This is a full-stack TypeScript monorepo boilerplate using React Router, tRPC, and Drizzle ORM. It provides a modern, type-safe development experience from frontend to backend.
 
 ## What's inside?
 
@@ -16,120 +8,135 @@ This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- `web`: A [React Router](https://reactrouter.com/) app with server-side rendering capabilities
+- `mobile`: An [Expo](https://expo.dev/) app for iOS and Android
+- `@repo/api`: A [tRPC](https://trpc.io/) API package that provides type-safe API endpoints
+- `@repo/database`: A [Drizzle ORM](https://orm.drizzle.team/) package for database operations with PostgreSQL
+- `@repo/typescript-config`: Shared TypeScript configurations used throughout the monorepo
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+Each package/app is 100% [TypeScript](https://www.typescriptlang.org/) for end-to-end type safety.
 
 ### Utilities
 
-This Turborepo has some additional tools already setup for you:
+This boilerplate has several tools already set up for you:
 
 - [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+- [Biome](https://biomejs.dev/) for linting and formatting
+- [Turborepo](https://turbo.build/repo) for monorepo management
+- [tRPC](https://trpc.io/) for end-to-end typesafe APIs
+- [Drizzle ORM](https://orm.drizzle.team/) for type-safe database operations
+- [React Router](https://reactrouter.com/) for routing with server-side rendering
+- [TanStack Query](https://tanstack.com/query) for data fetching and caching
+
+### Getting Started
+
+#### Prerequisites
+
+- Node.js 18 or later
+- PostgreSQL database
+
+#### Environment Setup
+
+Create a `.env` file in the root directory with the following variables:
+
+```
+POSTGRES_URL=postgresql://username:password@localhost:5432/your_database
+```
 
 ### Build
 
 To build all apps and packages, run the following command:
 
-```
-cd my-turborepo
+```sh
+# Install dependencies
+npm install
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+# Build all packages
+npm run build
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+You can build a specific package by using a filter:
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+```sh
+npm run build -- --filter=web
 ```
 
 ### Develop
 
 To develop all apps and packages, run the following command:
 
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+```sh
+npm run dev
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+You can develop a specific app by using a filter:
+
+```sh
+# Run only the web app
+npm run dev -- --filter=web
+
+# Run only the mobile app
+npm run dev -- --filter=mobile
+```
+
+### Type Checking
+
+To run type checking across all packages:
+
+```sh
+npm run check-types
+```
+
+### Project Structure
 
 ```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+├── apps/
+│   ├── mobile/         # Expo mobile app
+│   └── web/            # React Router web app
+├── packages/
+│   ├── api/            # tRPC API definitions
+│   ├── database/       # Drizzle ORM and database schema
+│   └── typescript-config/ # Shared TypeScript configurations
 ```
+
+### How It Works
+
+#### Web App (React Router)
+
+The web app uses React Router for routing with server-side rendering capabilities. It communicates with the backend using tRPC for type-safe API calls.
+
+- **Server Components**: Handle data fetching on the server using tRPC
+- **Client Components**: Use tRPC client for data mutations and real-time updates
+
+#### Mobile App (Expo)
+
+The mobile app is built with Expo and uses the same tRPC API as the web app, providing a consistent development experience across platforms.
+
+#### API Layer (tRPC)
+
+The API layer is built with tRPC, which provides end-to-end type safety between the client and server. The API procedures are defined in the `packages/api` directory.
+
+#### Database Layer (Drizzle ORM)
+
+The database layer uses Drizzle ORM for type-safe database operations with PostgreSQL. The database schema is defined in `packages/database/src/schema.ts`.
 
 ### Remote Caching
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
+This project supports Turborepo's Remote Caching feature, which can significantly speed up builds in CI/CD environments. See the [Turborepo documentation](https://turbo.build/repo/docs/core-features/remote-caching) for more information on setting up Remote Caching.
 
 ## Useful Links
 
-Learn more about the power of Turborepo:
+### Core Technologies
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+- [React Router](https://reactrouter.com/en/main) - The official documentation for React Router
+- [tRPC](https://trpc.io/docs) - End-to-end typesafe APIs made easy
+- [Drizzle ORM](https://orm.drizzle.team/docs/overview) - TypeScript ORM for SQL databases
+- [Turborepo](https://turbo.build/repo/docs) - High-performance build system for JavaScript/TypeScript monorepos
+- [Expo](https://docs.expo.dev/) - Platform for making universal native apps for Android, iOS, and the web
+
+### Additional Resources
+
+- [TypeScript](https://www.typescriptlang.org/docs/) - TypeScript documentation
+- [TanStack Query](https://tanstack.com/query/latest/docs/react/overview) - Powerful data fetching and caching library
+- [Biome](https://biomejs.dev/guides/) - Fast linter and formatter for JavaScript and TypeScript
+- [PostgreSQL](https://www.postgresql.org/docs/) - Advanced open source relational database
